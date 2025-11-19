@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTT Platforms vs Bollywood Cinema</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>OTT Platforms vs Bollywood Cinema</h1>
+
+<div class="container">
+  <div class="card">
+    <h2>OTT Sample Image</h2>
+    <img src="https://picsum.photos/500/300?random=1" alt="OTT Image" />
+  </div>
+
+  <div class="card">
+    <h2>Bollywood Sample Image</h2>
+    <img src="https://picsum.photos/500/300?random=2" alt="Bollywood Image" />
+  </div>
+
+  <div class="card">
+    <h2>Popularity Comparison</h2>
+    <canvas id="popularityChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h2>Revenue Growth</h2>
+    <canvas id="revenueChart"></canvas>
+  </div>
+</div>
+
+<script>
+  // Popularity Chart
+  const popularityCtx = document.getElementById('popularityChart').getContext('2d');
+  new Chart(popularityCtx, {
+      type: 'bar',
+      data: {
+          labels: ['OTT', 'Bollywood'],
+          datasets: [{
+              label: 'Popularity (%)',
+              data: [78, 62],
+              backgroundColor: ['#4CAF50', '#FF5722']
+          }]
+      },
+      options: {
+        responsive: true
+      }
+  });
+
+  // Revenue Chart
+  const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+  new Chart(revenueCtx, {
+      type: 'line',
+      data: {
+          labels: ['2018', '2019', '2020', '2021', '2022'],
+          datasets: [{
+              label: 'OTT Revenue (in Cr)',
+              data: [2000, 2500, 3500, 5000, 6200],
+              borderColor: '#3f51b5',
+              borderWidth: 2,
+              fill: false
+          },{
+              label: 'Bollywood Revenue (in Cr)',
+              data: [4500, 4700, 2000, 2500, 3000],
+              borderColor: '#e91e63',
+              borderWidth: 2,
+              fill: false
+          }]
+      },
+      options: {
+        responsive: true
+      }
+  });
+</script>
+
+</body>
+</html>

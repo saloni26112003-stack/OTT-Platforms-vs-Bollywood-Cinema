@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTT Platforms vs Bollywood Cinema</title>
+  <link rel="stylesheet" href="style.css">
+ <style>
+   body{
+     font-family:'Poppins', sans-serif;
+     background-color:#f7f8fa;
+     color:#333;
+     text-align:center;
+     margin:0;
+     padding:0;
+  }
+ 
+ header{
+   background-color:#1e1e1e:
+   color:white;
+   padding:20px;
+   animation:fadeIn 2s ease-in-out:
+ }
+  
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(-20px); }
+     to{opacity:1; transform:translateY(0); }
+  }
+ .comparison{
+   display:flex;
+   justify-content:center;
+   flex-wrap:wrap;
+   margin:30px;
+   gap:20px;
+ }
+
+ .card{
+   background:white;
+   border-radius:12px;
+   box-shadow:0 0 10px rgba(0,0,0,0.1);
+   width:300px:
+   padding:20px;
+   transition:transform 0.3s ease;
+ }
+.card:hover{
+  transform:scale(1.05);
+}
+.ott{
+  border-top:6px solid #4caf50; }
+.bollywood{
+  border-top:6px solid #2196f3;}
+.vote-section{
+  margin:30px;
+ }
+
+button{
+  padding:10px 20px;
+  margin:10px;
+  border:none;
+  border-radius:8px;
+  background-color:#222;
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+}
+
+button:hover{
+  background-color:#555;
+}
+
+.chart-section{
+ margin:40px auto;
+ width:80%;
+ max-width:600px;
+}
+
+.facts, .feedback{
+  margin:40px auto;
+  width:80%;
+  max-width:600px;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0  0 8px rgba(0,0,0,0.1);
+}
+
+.feedback input, .feedback textarea{
+  width:80%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-family:'Poppins;
+}
+
+footer{
+  background:1e1e1e;
+  color:#bbb;
+  padding:15px;
+  margin-top:40px;
+  font-size:14px;
+}
+
+footer a{
+  color:#4cafef;
+  text-decoratio:none;
+}
+
+footer a:hover{
+  text-decoration:underline;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>OTT Platforms vs Bollywood Cinema</h1>
+    <p>Explore the differences between digital streaming and traditional cinema</p>
+    </header>
+  
+ <section class="comparison">
+  <div class="card ott">
+    <h2>OTT Platforms</h2>
+    <ul>
+     <li>Online streaming(Netflix, Amazon Prime, etc.)</li>
+     <li>Accessible anywhere, anytime</li>
+     <li>Subscription-based content</li>
+     <li>Web series and short films</li>
+     <li>Focus on realism and experimentation</li>
+    </ul>
+   </div>
+
+  <div class="card bollywood">
+   <h2>Bollywood Cinema</h2>
+   <ul>
+    <li>Big-screen theatrical experience</li>
+    <li>Mass entertainment for audinces</li>
+    <li>High budgets and star-sriven films</li>
+    <li>Focus on dance, songs, and emotions</li>
+   </ul>
+  </div>
+ </section>
+
+<section class="vote-section">
+  <h2>Which do you prefer?</h2>
+  <button id="voteOTT">Vote for OTT</button>
+  <button id="voteBollywood">Vote for Bollywood</button>
+  <p id="result"></p>
+</section>
+
+<section class="chart-section">
+  <h2>Live Vote Chart</h2>
+  <canvas id="voteChart" width="400" height="200"></canvas>
+</section>
+
+<footer>
+  <p>Created using HTML,CSS, and Javascript</p>
+</footer>
+<script>
+  let ottVotes=0;
+  let bollyVotes=0;
+
+document.getElementById("voteOTT").addEventListener("click", function(){
+ ottVotes++;
+ showResult();
+});
+
+document.getElementById("voteBollywood").addEventlistener("click", function(){
+ bollyVotes++;
+ showresult();
+});
+
+function showResult(){
+  const total=ottVotes+bollyVotes;
+  if(total==0){
+     document.getElementById("result").innerText="";
+  } else{
+     document.getElementById("result")/innerText=OTT:${ottVotes} votes/ Bollywood:${bollyVotes} votes;
+  }
+}
+</script>
+s<script src="script.js"></script>
+</body>
+</html>
