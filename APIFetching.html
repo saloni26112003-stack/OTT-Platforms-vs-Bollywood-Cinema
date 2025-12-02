@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTT vs Bollywood – Live Voting</title>
+    <style>
+        body { font-family: Arial; margin:0; background:#f4f4f4; padding:20px; }
+        h2 { color:#333; }
+        .collage { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:20px;}
+        .collage img { width:100%; height:220px; object-fit:cover; border-radius:12px;}
+        button { padding:10px 18px; margin:5px; font-size:16px; border:none; border-radius:8px; background:#007bff; color:white; cursor:pointer;}
+        button:hover { background:#0056d2;}
+        table { width:100%; border-collapse:collapse; margin-top:20px; background:white; border-radius:10px; overflow:hidden;}
+        th, td { border:1px solid #ddd; padding:10px; text-align:center;}
+        th { background:#007bff; color:white;}
+        .info-box { background:white; padding:15px; border-radius:10px; margin-top:20px; }
+    </style>
+</head>
+<body>
+
+<h1>OTT vs Bollywood — Live Voting & Analysis</h1>
+
+<h2>Image Collage</h2>
+<div class="collage">
+    <!-- OTT Images -->
+    <img src="https://images.unsplash.com/photo-1589779255520-8ecf3d1c5a71" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1599937660773-7d1de13b39fb" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1588508065123-0a3fb7a3e66b" loading="lazy">
+
+    <!-- Bollywood Images -->
+    <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48" loading="lazy">
+</div>
+
+<h2>Live Voting</h2>
+<button onclick="vote('ott')">Vote OTT</button>
+<button onclick="vote('bollywood')">Vote Bollywood</button>
+<br><br>
+<canvas id="voteChart" width="400" height="250"></canvas>
+
+<h2>Comparison Table</h2>
+<table>
+<tr><th>Feature</th><th>OTT</th><th>Bollywood</th></tr>
+<tr><td>Release Speed</td><td>Fast</td><td>Slow</td></tr>
+<tr><td>Cost</td><td>Low subscription</td><td>Theatre ticket</td></tr>
+<tr><td>Audience Reach</td><td>Global</td><td>Local</td></tr>
+<tr><td>Content Type</td><td>Series, Movies</td><td>Movies only</td></tr>
+</table>
+
+<div class="info-box">
+<h3>OTT Advantages</h3>
+<p>Accessible anytime, flexible subscriptions, multi-language, worldwide content.</p>
+<h3>Bollywood Advantages</h3>
+<p>Big-budget movies, cultural impact, theatre experience.</p>
+<h3>Future Trend</h3>
+<p>Hybrid: OTT convenience + Bollywood grandeur.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    /* ⭐ Paste your backend URL from Colab here */
+    const backendURL = "https://pisolitic-interungulate-sarita.ngrok-free.dev";
+
+    let chart;
+
+    async function vote(category) {
+        await fetch(`${backendURL}/vote`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({category})
+        });
+        loadVotes();
+    }
+
+    async function loadVotes() {
+        const res = await fetch(`${backendURL}/results`);
+        const data = await res.json();
+
+        const ottVotes = data.ott;
+        const bolVotes = data.bollywood;
+
+        if(!chart){
+            const ctx = document.getElementById("voteChart").getContext("2d");
+            chart = new Chart(ctx,{
+                type:"pie",
+                data:{labels:["OTT","Bollywood"], datasets:[{data:[ottVotes,bolVotes]}]}
+            });
+        } else {
+            chart.data.datasets[0].data = [ottVotes, bolVotes];
+            chart.update();
+        }
+    }
+
+    loadVotes();
+</script>
+</body>
+</html>
