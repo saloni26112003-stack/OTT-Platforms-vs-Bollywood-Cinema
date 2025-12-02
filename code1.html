@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTT vs Bollywood – Full Analysis & Live Voting</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .section {
+            padding: 25px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Collage grid */
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .collage img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: #007bff;
+            font-size: 18px;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0059d1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+        }
+
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .info-box {
+            background: white;
+            padding: 20px;
+            line-height: 1.6;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    OTT Platforms vs Bollywood Cinema — Full Analysis & Live Voting
+</header>
+
+<!-- ========== COLLAGE ========== -->
+<div class="section">
+    <h2>Image Collage</h2>
+
+    <div class="collage">
+
+        <!-- OTT -->
+        <img src="https://images.unsplash.com/photo-1589779255520-8ecf3d1c5a71" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1599937660773-7d1de13b39fb" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1588508065123-0a3fb7a3e66b" loading="lazy">
+
+        <!-- Bollywood -->
+        <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48" loading="lazy">
+    </div>
+</div>
+
+
+<!-- ========== LIVE VOTING ========== -->
+<div class="section">
+    <h2>Live Voting</h2>
+
+    <button onclick="vote('ott')">Vote OTT</button>
+    <button onclick="vote('bollywood')">Vote Bollywood</button>
+
+    <br><br>
+
+    <canvas id="voteChart" width="400" height="250"></canvas>
+</div>
+
+
+<!-- ========== COMPARISON TABLE ========== -->
+<div class="section">
+    <h2>OTT vs Bollywood – Comparison Table</h2>
+
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>OTT Platforms</th>
+            <th>Bollywood Cinema</th>
+        </tr>
+        <tr>
+            <td>Release Speed</td>
+            <td>Very fast</td>
+            <td>Slow, big-scale releases</td>
+        </tr>
+        <tr>
+            <td>Cost</td>
+            <td>Cheap subscription</td>
+            <td>Expensive theatre</td>
+        </tr>
+        <tr>
+            <td>Reach</td>
+            <td>Global, instant</td>
+            <td>Limited to theatre zones</td>
+        </tr>
+        <tr>
+            <td>Content Variety</td>
+            <td>Series + Movies + Originals</td>
+            <td>Mostly movies</td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- ========== INFORMATION SECTION ========== -->
+<div class="section">
+    <h2>Detailed Information</h2>
+
+    <div class="info-box">
+        <h3>Why OTT Platforms Are Growing?</h3>
+        <p>OTT platforms allow freedom of choice, multiple languages, worldwide access, and low cost. Anyone can watch anytime, anywhere.</p>
+
+        <h3>Why Bollywood Still Matters?</h3>
+        <p>Theatre experience, big-budget movies, and emotional connection keep Bollywood dominant in Indian entertainment.</p>
+
+        <h3>Future Trend</h3>
+        <p>The future will be a hybrid – OTT for convenience and Bollywood for theatrical excitement.</p>
+    </div>
+</div>
+
+
+<!-- ========== JAVASCRIPT ========== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    /* ⭐⭐⭐ PASTE YOUR BACKEND URL HERE ⭐⭐⭐ */
+    const backendURL = " https://pisolitic-interungulate-sarita.ngrok-free.dev";
+
+
+    let chart;
+
+    async function vote(category) {
+        await fetch(`${backendURL}/vote`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ category })
+        });
+
+        loadVotes();
+    }
+
+    async function loadVotes() {
+        const response = await fetch(`${backendURL}/results`);
+        const data = await response.json();
+
+        const ott = data.ott;
+        const bol = data.bollywood;
+
+        if (!chart) {
+            const ctx = document.getElementById("voteChart").getContext("2d");
+
+            chart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: ["OTT", "Bollywood"],
+                    datasets: [{
+                        data: [ott, bol]
+                    }]
+                }
+            });
+
+        } else {
+            chart.data.datasets[0].data = [ott, bol];
+            chart.update();
+        }
+    }
+
+    loadVotes();
+</script>
+
+</body>
+</html>
